@@ -1,4 +1,4 @@
-package lesson00;
+package lesson001;
 
 public class E004_RelationalOperators {
 
