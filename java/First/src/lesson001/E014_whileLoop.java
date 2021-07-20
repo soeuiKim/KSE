@@ -1,6 +1,6 @@
 package lesson001;
 
-public class E013_whileLoop {
+public class E014_whileLoop {
 
 	public static void main(String[] args) {
 	
