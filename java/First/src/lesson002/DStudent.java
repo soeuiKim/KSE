@@ -1,6 +1,6 @@
 package lesson002;
 
-public class DStudent implements DPerson {
+//public class DStudent implements DPerson {
 
 //	@Override
 //	public void sleep() {
@@ -13,5 +13,5 @@ public class DStudent implements DPerson {
 //		// TODO Auto-generated method stub
 //
 //	}
-
-}
+//
+//}
