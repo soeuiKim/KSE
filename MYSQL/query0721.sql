@@ -333,6 +333,115 @@ select 제품.제품명, 제품.단가, 제품.단가*주문.수량 as 금액
 	where 고객.고객아이디 = 주문.주문고객 and 제품.제품번호 = 주문.주문제품
 		and 고객.나이 >= 30;
 
+-- --------------------------------------7/29--------------------------------------------
+
+select * from 고객;
+select * from 주문;
+select * from 제품;
+
+-- 나이가 30이상인 고객이주문한 상품명과 단가 구하기 : 제품중심
+select 제품명, 단가 from 제품 where 제품번호 in
+	(select 주문제품 from 주문 where 주문고객 in
+		(select 고객아이디 from 고객 where 나이 >= 30));
+
+-- 나이 30 , 상품명 단가, 금액 : 주문중심 (서브쿼리+조인)
+select 제품.제품명, 제품.단가, 제품.단가 * 주문.수량 as 금액 from 제품, 주문 
+	where 제품.제품번호 = 주문.주문제품 and 제품번호 in
+	(select 주문제품 from 주문 where 주문고객 in
+		(select 고객아이디 from 고객 where 나이 >= 30));
+
+insert into 고객(고객아이디, 고객이름, 나이, 등급, 직업, 적립금)
+values ('strawberry','최유경','30','vip','공무원',100);
+
+select * from 고객;
+
+insert into 고객 values ('tomato','정은심','36','gold',null,4000);
+
+select * from 고객;
+
+
+-- insert구문으로 테이블 생성(복사해서)
+create table 한빛제품 (
+	제품명     VARCHAR(20),
+	재고량     INT,
+	단가       INT
+);
+-- 한빛제품이라는 테이블 먼저 생성
+
+-- insert로 한빛제과의 제품을 복사해서 내용을 만듬
+insert into 한빛제품(제품명, 재고량, 단가)
+	select 제품명, 재고량, 단가 from 제품 where 제조업체 = '한빛제과';
+    
+select * from 한빛제품;
+
+-- update : 데이터 수정
+select * from 제품;
+
+-- 제품번호가 p03인 제품명을 통큰파이, 단가를 3000원 으로 수정
+update 제품 set 제품명 = '통큰파이', 단가 = 3000 where 제품번호 = 'p03';
+
+-- 모든제품단가 10% 인상( where 생략가능 )
+update 제품 set 단가 = 단가 * 1.1 ;
+     -- edit > prefrence > sqlediter 맨밑 safe update 체크해제
+     -- update 사용시 where절이 없으면 실수일수도 있으니 락 걸어논것.
+     -- (많은 데이터가 한번에 바뀔수있으니까)
+
+-- 서브쿼리를 이용한 update문
+-- 정소화 고객이 주문한 제품수량 5개로 수정(고객+주문)
+
+-- select * from 주문 where 주문고객 in
+-- (select 고객아이디 from 고객 where 고객이름 = '정소화');
+-- update전에 조회가 잘되는지 확인(안전한 변경을위해)
+
+update 주문 set 수량 = 5 where 주문고객 in
+(select 고객아이디 from 고객 where 고객이름 = '정소화');
+
+select * from 주문;
+
+-- delete 삭제
+-- 2019-05-22주문 삭제 
+delete from 주문 where 주문일자 = '2019-05-22'; 
+
+-- 정소화 고객이 주문한 내역 삭제 (서브쿼리를 이용한 삭제)
+delete from 주문 where 주문고객 in
+	(select 고객아이디 from 고객 where 고객이름 = '정소화');
+
+-- 뷰 : 가상테이블 : 창문역할 = 기본테이블 변화 x
+-- vip고객의 이름 아이디 나이를 우수고객 뷰로 생성
+create view 우수고객(고객아이디, 고객이름, 나이) 
+	as select 고객아이디, 고객이름, 나이 from 고객 where 등급 = 'vip';
+
+select * from 우수고객;
+
+-- view는 일반 테이블과 같은 방법으로 조회할수있음.
+select * from 우수고객 where 나이 >= 25;
+
+select * from 고객;
+select * from 주문;
+select * from 제품;
+-- 3000원 이상 제품 구매한 고객아이디, 성명, 금액, 제품명 조회(주문중심)
+select 고객.고객아이디, 고객.고객이름, 제품.제품명, 제품.단가 * 주문.수량 as 금액 from 고객, 주문, 제품
+		where 고객.고객아이디 = 주문.주문고객
+		and 주문.주문제품 = 제품.제품번호 
+        and 제품.단가 >= 3000;
+-- 답
+select c.고객아이디, c.고객이름, p.제품명
+	from 고객 c, 주문 o, 제품 p 
+    where c.고객아이디 = o.주문고객 and p.제품번호 = o.주문제품
+    and p.단가 >= 3000;
+
+
+-- 나이 30이하 고객이 주문한 제품명, 단가 조회(제품중심)
+select 제품.제품명, 제품.단가 from 제품, 주문
+	where 제품.제품번호=주문.주문제품 in
+		(select 주문제품 from 주문 where 주문고객 in
+		(select 고객아이디 from 고객 where 나이 <= 30));
+
+-- 답
+select 제품명, 단가 from 제품 where 제품번호 in
+    (select 주문제품 from 주문 where 주문고객 in
+		(select 고객아이디 from 고객 where 나이 <= 30));
+
 
 
 
