@@ -110,6 +110,194 @@ select c.c_id, c.c_name from tblcustomer c
                 (select avg(p_price) from tblproduct)));
 
 
+-- 자동증가를 위해 sequence생성
+create table tblboard (
+    b_num int not null,
+    b_subject varchar(100),
+    b_contents varchar(2000),
+    b_name varchar(20),
+    b_date date,
+    constraint pk_b_num primary key (b_num)
+);
+
+create sequence seq_b_num; --글번호 증가형 시퀀스, 1씩 증가
+
+insert into tblboard (b_num, b_subject, b_contents, b_name, b_date)
+    values (seq_b_num.nextval,'글제목','글내용','홍길동','2021-07-30');
+           -- ↑오라클에서 자동증가값 설정
+
+select * from tblboard;
+
+
+
+
+
+
+/* ----------------DB설계----------
+   ---------- 온라인 쇼핑몰 구현----*/
+
+-- 고객테이블
+create table tblmember (
+    m_id varchar(20) not null,
+    m_name varchar(20) not null,
+    constraint pk_m_id primary key (m_id)
+);
+
+-- 상품테이블
+create table tblgoods (
+    g_code int not null,
+    g_name varchar(100) not null,
+    g_price int not null,
+    constraint pk_g_code primary key (g_code)
+);
+
+-- 주문테이블
+create table tblaccount (
+    o_code int not null,       -- 영수증번호(pk)
+    m_id varchar(20) not null, -- 주문고객(fk_멤버)
+    o_date date not null,
+    constraint pk_a_code primary key (a_code),
+    constraint fK_m_id foreign key (m_id) references tblmember (m_id)
+);  -- 제약조건 (pk,fk...) fk는 참조테이블 명시 ↑
+
+create table tblsale(
+    s_code int not null,
+    a_code int not null,
+    g_code int not null,
+    s_cnt int not null,
+    constraint pk_s_code primary key (s_code),
+    constraint fk_a_code foreign key(a_code) references tblaccount(a_code),
+    constraint fk_g_code foreign key(g_code) references tblgoods(g_code)
+);
+
+create sequence seq_g_code;
+create sequence seq_a_code;
+create sequence seq_s_code;
+
+insert into tblmember(m_id, m_name) values('apple', '정소화');
+insert into tblmember(m_id, m_name) values('banana', '김선우');
+insert into tblmember(m_id, m_name) values('carrot', '고명석');
+insert into tblmember(m_id, m_name) values('orange', '김용욱');
+insert into tblmember(m_id, m_name) values('melon', '성원용');
+insert into tblmember(m_id, m_name) values('peach', '오형준');
+insert into tblmember(m_id, m_name) values('pear', '채광주');
+
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, '이탈리안BMT', 5000);
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, '서브웨이클럽', 6000);
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, '에그마요', 4800);
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, 'BLT', 5500);
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, 'K바베큐', 5800);
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, '터키', 5800);
+insert into tblgoods(g_code, g_name, g_price) 
+    values(seq_g_code.nextval, '베지터블', 5800);
+
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'apple', '2021-07-30');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'banana', '2021-07-23');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'carrot', '2021-06-30');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'orange', '2021-05-18');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'melon', '2021-08-13');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'peach', '2021-07-13');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'pear', '2021-06-11');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'apple', '2021-04-12');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'banana', '2021-03-19');
+insert into tblaccount(a_code, m_id, a_date)
+    values(seq_a_code.nextval, 'carrot', '2021-08-01');
+
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 1,27,1);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 2,26,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 3,21,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 4,27,4);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 5,26,5);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 6,25,1);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 7,24,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 8,23,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 9,22,4);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 10,21,5);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 1,25,4);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 2,23,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 3,27,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 4,26,1);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 5,25,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 6,24,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 7,28,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 8,26,1);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 9,27,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 10,25,5);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 1,24,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 2,22,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 3,25,4);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 4,25,3);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 5,23,2);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 6,26,1);
+insert into tblsale(s_code, a_code, g_code, s_cnt)
+    values(seq_s_code.nextval, 10,27,2);
+
+select * from tblaccount;
+select * from tblgoods;
+select * from tblmember;
+select * from tblsale;
+
+commit; -- 저장
+
+-- account의 날짜정보는 7월 1일 ~ 30일 범위 내에서 추가
+
+--insert into tblaccount (a_code, m_id, a_date)
+--    values (seq_a_code.nextval, 'apple', '2021-07-05');
+--
+--insert into tblsale (s_code, a_code, g_code, s_cnt)
+--    values (seq_s_code, 1, 5, 3);
+
+
+
+
+
+
+
+
+
+
+
     
 
 

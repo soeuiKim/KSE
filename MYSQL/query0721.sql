@@ -442,6 +442,35 @@ select 제품명, 단가 from 제품 where 제품번호 in
     (select 주문제품 from 주문 where 주문고객 in
 		(select 고객아이디 from 고객 where 나이 <= 30));
 
+-- ---------------07/30----------------------- 
+use Mysql;
+
+-- 자동증가옵션
+create table tblboard ( -- auto_increament : 자동증가 설정
+	b_num int not null auto_increment, -- 글번호
+    b_subject varchar(100) not null,   -- 제목
+    b_contents varchar(2000),          -- 내용
+    b_name varchar(20),                -- 작성자 
+    b_date date, 					   -- 작성일
+    primary key(b_num)
+);
+
+insert into tblboard (b_subject, b_contents, b_name, b_date)
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
