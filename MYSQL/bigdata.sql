@@ -153,9 +153,9 @@ create table tblgoods (
 
 -- 주문테이블
 create table tblaccount (
-    o_code int not null,       -- 영수증번호(pk)
+    a_code int not null,       -- 영수증번호(pk)
     m_id varchar(20) not null, -- 주문고객(fk_멤버)
-    o_date date not null,
+    a_date date not null,
     constraint pk_a_code primary key (a_code),
     constraint fK_m_id foreign key (m_id) references tblmember (m_id)
 );  -- 제약조건 (pk,fk...) fk는 참조테이블 명시 ↑
@@ -170,6 +170,7 @@ create table tblsale(
     constraint fk_g_code foreign key(g_code) references tblgoods(g_code)
 );
 
+
 create sequence seq_g_code;
 create sequence seq_a_code;
 create sequence seq_s_code;
@@ -181,6 +182,8 @@ insert into tblmember(m_id, m_name) values('orange', '김용욱');
 insert into tblmember(m_id, m_name) values('melon', '성원용');
 insert into tblmember(m_id, m_name) values('peach', '오형준');
 insert into tblmember(m_id, m_name) values('pear', '채광주');
+
+select * from tblmember;
 
 insert into tblgoods(g_code, g_name, g_price) 
     values(seq_g_code.nextval, '이탈리안BMT', 5000);
@@ -197,26 +200,30 @@ insert into tblgoods(g_code, g_name, g_price)
 insert into tblgoods(g_code, g_name, g_price) 
     values(seq_g_code.nextval, '베지터블', 5800);
 
+select * from tblgoods;
+
 insert into tblaccount(a_code, m_id, a_date)
     values(seq_a_code.nextval, 'apple', '2021-07-30');
 insert into tblaccount(a_code, m_id, a_date)
     values(seq_a_code.nextval, 'banana', '2021-07-23');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'carrot', '2021-06-30');
+    values(seq_a_code.nextval, 'carrot', '2021-07-30');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'orange', '2021-05-18');
+    values(seq_a_code.nextval, 'orange', '2021-07-18');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'melon', '2021-08-13');
+    values(seq_a_code.nextval, 'melon', '2021-07-13');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'peach', '2021-07-13');
+    values(seq_a_code.nextval, 'peach', '2021-07-15');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'pear', '2021-06-11');
+    values(seq_a_code.nextval, 'pear', '2021-07-11');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'apple', '2021-04-12');
+    values(seq_a_code.nextval, 'apple', '2021-07-12');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'banana', '2021-03-19');
+    values(seq_a_code.nextval, 'banana', '2021-07-19');
 insert into tblaccount(a_code, m_id, a_date)
-    values(seq_a_code.nextval, 'carrot', '2021-08-01');
+    values(seq_a_code.nextval, 'carrot', '2021-07-01');
+
+select * from tblaccount;
 
 insert into tblsale(s_code, a_code, g_code, s_cnt)
     values(seq_s_code.nextval, 1,27,1);
@@ -251,7 +258,7 @@ insert into tblsale(s_code, a_code, g_code, s_cnt)
 insert into tblsale(s_code, a_code, g_code, s_cnt)
     values(seq_s_code.nextval, 6,24,3);
 insert into tblsale(s_code, a_code, g_code, s_cnt)
-    values(seq_s_code.nextval, 7,28,2);
+    values(seq_s_code.nextval, 7,21,2);
 insert into tblsale(s_code, a_code, g_code, s_cnt)
     values(seq_s_code.nextval, 8,26,1);
 insert into tblsale(s_code, a_code, g_code, s_cnt)
@@ -272,31 +279,46 @@ insert into tblsale(s_code, a_code, g_code, s_cnt)
     values(seq_s_code.nextval, 6,26,1);
 insert into tblsale(s_code, a_code, g_code, s_cnt)
     values(seq_s_code.nextval, 10,27,2);
-
+    
+select * from tblsale;
 select * from tblaccount;
 select * from tblgoods;
 select * from tblmember;
-select * from tblsale;
 
 commit; -- 저장
 
 -- account의 날짜정보는 7월 1일 ~ 30일 범위 내에서 추가
 
---insert into tblaccount (a_code, m_id, a_date)
---    values (seq_a_code.nextval, 'apple', '2021-07-05');
---
---insert into tblsale (s_code, a_code, g_code, s_cnt)
---    values (seq_s_code, 1, 5, 3);
+-- 전체주문내역을 조회, 주문코드, 주문자, 주문자id, 주문자 성명, 주문날짜 조회
+select a.a_code, m.m_id, m.m_name, a.a_date
+    from tblmember m, tblaccount a
+    where m.m_id=a.m_id;
 
+-- 정소화 고객의 상세 주문내용을 출력 
+-- (주문자 성명, 주문코드, 상품코드, 상품명, 단가, 금액)
+--select m.m_name, g.g_code, g.g_name, g.g_price 
+--    from tblmember m, tblaccount a, tblsale s
+--    where m.m_id = a.m_id and a.a_code = s.a_code and
+--    (select m_id from tblmember where m_name='정소화');
+    
+    --답 (모든테이블 조인)
+    select m.m_name, g.g_code, g.g_name, a.a_code, g.g_price, s.s_cnt, s.s_cnt * g.g_price 
+        from tblmember m, tblgoods g, tblaccount a, tblsale s
+        where m.m_id = a.m_id and a.a_code = s.a_code and g.g_code = s.g_code
+            and m.m_name = '정소화';
+    
+-- 가장 최근에 주문한 주문코드에 대하여 주문상세내역을 출력
+-- (주문코드, 제품명, 단가, 수량, 금액) 
 
+--select a.a_code, g.g_name, g.g_price, s.s_cnt, g.g_price * s.s_cnt
+--    from tblgoods g, tblaccount a, tblsale s
+--    where a.a_code = s.a_code and g.g_code = s.g_code 
+--        and (select max(a_code) from tblaccount) ;
 
-
-
-
-
-
-
-
+select s.a_code, g.g_name, g.g_price, s.s_cnt, g.g_price * s.s_cnt
+    from tblsale s, tblgoods g
+    where s.a_code = g.g_code 
+    and s.a_code = (select max(a_code) from tblaccount);
 
     
 

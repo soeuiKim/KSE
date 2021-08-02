@@ -1,0 +1,28 @@
+    h1 {
+    color: rgb(26, 159, 236);
+    font-family: verdana;
+    font-size: 300%;
+    }
+    p {
+    color: rgb(12, 80, 52);
+    font-family: courier;
+    font-size: 160%;
+    border: 2px dotted powderblue;
+    padding: 10px;
+    padding-left: 50px;
+    
+    margin : 20px;
+    }
+
+    a:link, a:visited {
+        background-color: #f79b94;
+        color: rgb(255, 255, 255);
+        padding: 15px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+      
+    a:hover, a:active {
+        background-color: rgb(184, 38, 38);
+    }
