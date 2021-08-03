@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.w3-card-2{
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),
+    0 2px 10px 0 rgba(0,0,0,0.12)
+}
+.w3-card-4,.w3-hover-shadow:hover{
+    box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),
+    0 4px 20px 0 rgba(0,0,0,0.19)
+}
+
+.city {
+  background-color: pink;
+  color: black;
+  border: 2px solid deeppink;
+  margin: 20px;
+  padding: 20px;
+}
+
+#seoul {
+    background-color: rgb(87, 124, 14);
+    color : white;
+    border : 5px dotted rgb(214, 187, 187);
+    margin : 50px;
+    padding : 50px;
+}
+
+.bgimg {
+    background-image: url("img/img_girl.jpg");
+    
+}
+
+</style>
+
+<script>
+    function myFunction() {
+      var x = document.getElementsByClassName("city");
+      for (var i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+    }
+    </script>
+
+</head>
+<body onload="myFunction();">
+
+<div class="city bgimg">
+  <h2>London</h2>
+  <p>London is the capital of England.</p>
+</div>
+
+<div class="city">
+  <h2>Paris</h2>
+  <p>Paris is the capital of France.</p>
+</div>
+
+<div class="bgimg" id="seoul">
+  <h2>Seoul</h2>
+  <p>Seoul is the capital of Korea.</p>
+</div>
+
+</body>
+</html>

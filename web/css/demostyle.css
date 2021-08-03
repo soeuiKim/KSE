@@ -1,0 +1,54 @@
+/*
+2021-08-03, demostyle.css
+
+*/
+
+* {
+    box-sizing: border-box;
+}
+
+.box {
+    border : 2px solid black;
+    padding: 10px;
+    margin : 5px;
+    width : 30%;
+    height : 400px;
+    float : left;
+}
+
+.red {
+    background-color: red ;
+    color : white;
+}
+.blue {
+    background-color: blue;
+    color : white;
+}
+.green {
+    background-color: green;
+    color : white;
+}
+table, th, td {
+    whith : 100%;
+    height : 100%;
+    border-collapse:collapse;
+    border : 2px solid white;
+}
+
+.headingrow { 
+    height : 40px;
+}
+
+.contentsrow {
+    height : 300px;
+}
+
+.tailrow {
+    height : 40px;
+}
+
+@media screen and (max-width:800px){
+    .box{
+        width : 100%;
+    }
+}
