@@ -456,7 +456,9 @@ create table tblboard ( -- auto_increament : 자동증가 설정
 );
 
 insert into tblboard (b_subject, b_contents, b_name, b_date)
-	
+	values ('글제목','글내용','홍길동','2021-07-30');
+
+select * from tblboard;
 
 
 

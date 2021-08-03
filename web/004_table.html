@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #t01 {
+            border:0px;
+            width: 90%;
+            background-color: #f1f1c1;
+        }
+        #t01 tr:nth-child(even) {
+            border-top:2px solid rgb(100, 166, 241);
+            background-color: #eee;
+        }
+        #t01 tr:nth-child(odd) {            
+            background-color: rgb(201, 215, 236);
+        }
+        #t01 th {
+            color: rgb(255, 255, 255);
+            background-color: rgb(102, 80, 80);
+
+        table, th, td {
+            border: 1px solid rgb(120, 54, 146);
+            border-collapse: collapse;       
+        }
+        table{
+            border-spacing: 30px;
+        }
+        th, td {
+            padding: 15px;
+        }
+        th {
+            text-align: center;
+        }
+        td {
+            text-align: justify;
+        }
+    </style>
+
+</head>
+<body>
+
+    <table id="t01">
+        <caption>Table Demo</caption>
+        <tr>
+            <th>1열</th>
+            <th>2열</th>
+            <th>3열</th>
+        </tr>
+        <tr>
+            <td rowspan=2>korea</td>
+            <td>6000만</td>
+            <td>동아시아</td>
+        </tr>
+        <tr>
+            <td colspan=2>1억2천만</td>            
+        </tr>
+        <tr>
+            <td>aaaaaaa</td>
+            <td>bbbbbbb</td>
+            <td>ccccccc</td>
+        </tr>
+        <tr>
+            <td>aaaaaaa</td>
+            <td>bbbbbbb</td>
+            <td>ccccccc</td>
+        </tr>
+        <tr>
+            <td>aaaaaaa</td>
+            <td>bbbbbbb</td>
+            <td>ccccccc</td>
+        </tr>
+        <tr>
+            <td>aaaaaaa</td>
+            <td>bbbbbbb</td>
+            <td>ccccccc</td>
+        </tr>
+
+    </table>
+    
+    <table>
+        <caption>Table Demo</caption>
+        <tr>
+            <th>1열</th>
+            <th>2열</th>
+            <th>3열</th>
+        </tr>
+        <tr>
+            <td rowspan=2>korea</td>
+            <td>6000만</td>
+            <td>동아시아</td>
+        </tr>
+        <tr>
+            <td colspan=2>1억2천만</td>            
+        </tr>
+    
+    </table>
+
+
+</body>
+</html>
