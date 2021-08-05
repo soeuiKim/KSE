@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=chrome">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form {
+            float:left;
+            border: 1px solid lightslategray;
+            background-color : rgb(240, 240, 240);
+            width : 400px;
+            height : 500px;
+        }
+
+        label {
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <form action="008_action.html">
+        <label> form 구성과 연습 </label><br>
+
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname" value="John"><br>
+        <label for="lname">Last name: </label>
+        <input type="text" id="lname" name="lname" value="Doe">
+        <br><br>
+        
+        <input type="radio" id="html" name="fav_language" value="HTML">
+        <label for="html">HTML</label><br>
+        <input type="radio" id="css" name="fav_language" value="CSS">
+        <label for="css">CSS</label><br>
+        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+        <label for="javascript">JavaScript</label>
+        <br><br>
+
+        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+        <label for="vehicle1"> I have a bike</label><br>
+        <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+        <label for="vehicle2"> I have a car</label><br>
+        <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+        <label for="vehicle3"> I have a boat</label>
+        <br><br>
+
+        <input type="submit" value="submit"><br><br>
+        
+        <!-- <input type="button" value="submit"> submit과 같음 -->
+    </form>
+
+</body>
+</html>

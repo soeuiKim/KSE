@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /* css모든요소 초기화 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0 auto;  /*align center*/
+            width: 800px;
+        }
+
+        #menu {
+            width: 25%;
+            float: left;
+        }
+
+        #section {
+            width: 65%;
+            float: right;
+        }
+
+        li {
+            list-style: none;
+
+        }
+
+        /* media=반응형     max-width : 600px => 500픽셀 이하의 디바이스에서*/
+        @media screen and (max-width:600px) {
+            body {
+                width: auto;
+            }
+            #menu {
+                width: 100%;
+            }
+            #section {
+                width: 100%;
+            }
+        } /*end of @media screen and max-width */
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="menu">
+        <ul>
+            <li>Menu A</li>
+            <li>Menu B</li>
+            <li>Menu C</li>
+        </ul>
+    </div>
+
+    <div id="section">
+    
+    <h1> Sample Contents </h1>
+
+    <h2> 중앙 정령 데모 페이지</h2>
+
+    <p>우리나라 좋은나라.
+         동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세.
+        무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 
+        나의 살던 고향은 꽃피는 산골, 봉숭아꽃 살구꽃 아기 진달래
+        갑돌이와 갑순이는 한마을에 살았더래요</p>
+    <p>우리나라 좋은나라.
+         동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세.
+        무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 
+        나의 살던 고향은 꽃피는 산골, 봉숭아꽃 살구꽃 아기 진달래
+        갑돌이와 갑순이는 한마을에 살았더래요</p>
+     
+    </div>
+</body>
+</html>
