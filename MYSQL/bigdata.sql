@@ -321,6 +321,94 @@ select s.a_code, g.g_name, g.g_price, s.s_cnt, g.g_price * s.s_cnt
     and s.a_code = (select max(a_code) from tblaccount);
 
     
+select * from tblmember;   -- 고객
+select * from tblgoods;    -- 상품
+select * from tblaccount;  -- 주문고객
+select * from tblsale;     -- 주문상세
+
+insert into tblaccount (a_code, m_id, a_date)
+    values (seq_a_code.nextval,'apple','2021-08-05'); --apple고객주문
+    
+insert into tblsale (s_code, a_code, g_code, s_cnt)
+    values (seq_s_code.nextval, 11, 22, 2);
+
+insert into tblsale (s_code, a_code, g_code, s_cnt)
+    values (seq_s_code.nextval, 11, 25, 3);
+
+commit; -- insert, update, delete 명령 실행 후에 반드시 실행해야 저장
+
+-- 가장 마지막에 주문한 주문내역 조회 (tblaccount)
+select * from tblaccount where a_code = 
+    (select max(a_code) from tblaccount) ;
+
+-- 가장 마지막에 주문한 상세주문내역 조회 ( 주문코드, 상품코드, 상품명, 단가, 금액)
+select s.s_code, g.g_code, g.g_name, g.g_price, s.s_cnt * g.g_price pay 
+    from tblsale s, tblgoods g
+    where g.g_code = s.g_code and a_code = 
+        (select max(a_code) from tblaccount) ;
+
+-- 가장 마지막에 주문한 주문자 정보를 조회 (아이디,이름)
+select * from tblmember where m_id =
+ (select m_id from tblaccount where a_code = 
+    (select max(a_code) from tblaccount)) ;
+
+-- 답
+select m_id, m_name from tblmember where m_id =
+    (select m_id from tblaccount where a_code =
+        (select max(a_code) from tblaccount));
+
+-- 가장 마지막에 주문한 주문자의 총금액 조회
+select sum(s.s_cnt * g.g_price) pay
+    from tblsale s, tblgoods g
+    where g.g_code = s.g_code and a_code = 
+        (select max(a_code) from tblaccount) ;
+
+select * from tblmember;   -- 고객
+select * from tblgoods;    -- 상품
+select * from tblaccount;  -- 주문고객
+select * from tblsale;     -- 주문상세
+
+select a_code from tblaccount where m_id = 'carrot';
+
+-- (중복주문한) carrot 고객이 주문한 모든 금액과 날짜를 조회
+select a_date from tblaccount 
+    where a_code in
+    (select a_code from tblaccount where m_id = 'carrot');
+
+-- apple고객(교수님)_답ㅎㅎ
+select s.a_code, sum(g.g_price*s.s_cnt), a.a_date from tblsale s, tblgoods g, tblaccount a
+    where s.g_code = g.g_code and a.a_code = s.a_code and s.a_code in
+    (select a_code from tblaccount where m_id = 'apple')
+        group by s.a_code, a.a_date;
+         /* 그룹바이는 제일뒤에 그뒤에 오더바이
+            그룹바이한 항목만 표시할수 있음 (a.a_data...)
+            그룹바이하고 나서는 집계함수만 사용할수있음
+            <가장 난이도가 높은 쿼리> */
+
+-- apple고객이 주문한 상품의 종류와 상세정보(품명, 단가)
+
+select * from tblaccount where m_id = 'apple';
+
+select g.g_name, g.g_price from tblgoods g, tblsale s 
+    where s.g_code = g.g_code and s.a_code in
+    (select a_code from tblaccount where m_id = 'apple');
+
+-- -- 답
+select * from tblgoods where g_code in
+    (select g_code from tblsale where a_code in
+        (select a_code from tblaccount where m_id='apple'));
+
+-- apple고객이 한번이라도 주문하지 않았던 상품 조회
+select * from tblgoods where g_code not in
+    (select g_code from tblsale where a_code in
+        (select a_code from tblaccount where m_id='apple'));
+
+
+
+
+
+
+
 
 
 
