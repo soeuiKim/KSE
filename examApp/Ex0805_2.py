@@ -5,6 +5,8 @@ Created on Thu Aug  5 14:46:44 2021
 @author: user12
 """
 
+''' 레이아웃, 체크박스, 라디오버튼'''
+
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QCheckBox, QRadioButton, QVBoxLayout
 from PyQt5.QtCore import Qt
