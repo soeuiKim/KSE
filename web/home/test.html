@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+        
+        body {
+          margin: 0;
+        }
+        
+        .header {
+          background-color: #c5c5c5;
+          padding: 20px;
+          text-align: center;
+        }
+
+        .line {
+            background-color: rgb(43, 37, 37);
+            padding : 10px;
+        }
+
+        .siva {
+            float: left;
+            display: block;
+            padding : 20px;
+            background-color: rgb(15, 15, 15);
+        }
+        
+        .siva a {
+          float: left;
+          display: block;
+          color: #8f8e8e;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        .siva a:hover {
+          background-color: rgb(114, 114, 114);
+          color: rgb(255, 255, 255);
+        }
+        
+        .column {
+          float: left;
+          padding: 10px;
+        }
+        .column.side {
+            background-color: rgb(15, 15, 15) ;
+            color :rgb(255, 255, 255);
+            padding : 20px;
+            width: 25%;
+        }
+        
+        .column.middle {
+          width: 50%;
+        }
+        
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        
+        @media screen and (max-width: 600px) {
+          .column.side, .column.middle, .siva {
+            width: 100%;
+          }
+        }
+        
+        .footer {
+          background-color: #f1f1f1;
+          padding: 10px;
+          text-align: center;
+        }
+        </style>
+        </head>
+        <body>
+        
+        <div class="header">
+          <h1>Header</h1>
+          <p>헤더 설명 ㅎㅅㅎ</p>
+        </div>
+
+        <div class="line"></div>
+        
+        
+        <div class="row">
+            <div class="siva">
+              <a href="#">home</a><br>
+              <a href="#">contents1</a><br>
+              <a href="#">contents2</a><br>
+              <a href="#">contents3</a><br>
+              <a href="#">contents4</a><br>
+              <a href="#">contents5</a><br>
+            </div>
+          <div class="column middle">
+            <h2>Main Content</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+          </div>
+          
+          <div class="column side">
+            <h2>Side</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+            <p>오늘공부 끝!! 히히히히 </p>
+            <p>그래도 나름 열시미했당@ 꺄아하하아핳이하아히</p>
+            <p>비록 복사하고 수정한거지만..ㅜㅜ</p>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p>Footer</p>
+        </div>
+
+</body>
+</html>
