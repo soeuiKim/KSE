@@ -5,6 +5,8 @@ Created on Fri Aug  6 11:47:07 2021
 @author: user12
 """
 
+ # 답안
+
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem
 
