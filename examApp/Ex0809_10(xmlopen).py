@@ -13,6 +13,7 @@ air = BeautifulSoup(res,"html.parser") # xml 파싱 (저장)
 # 충북지역의 측정소명과 pm10값을 추출
 df1 = [] # 측정소명 저장한 빈 리스트 생성
 df2 = [] # pm10
+df3 = [] # pm25
 
 for it in air.findAll("item") : # 반복되는 item태그로 부터 it변수에 항목을 반환
     for sn in it.findAll('stationname') : # 모두 소문자로 
@@ -21,11 +22,16 @@ for it in air.findAll("item") : # 반복되는 item태그로 부터 it변수에 
     for pm10 in it.findAll('pm10value') : 
         # print(pm10.string)
         df2.append(pm10.string)
+    for pm25 in it.findAll('pm25value') :
+        df3.append(pm25.string)
+       
     
 # print (df1)
 # print (df2)
+# print (df3)
 
-df = pd.DataFrame({'station' : df1, 'pm10' : df2})
+df = pd.DataFrame({'station' : df1, 'pm10' : df2 , 'pm25' : df3})
 print (df.head()) # 상위 5개(기본값) 항목 출력
 df.to_csv('test.csv', encoding='euc-kr') # csv형식 파일 저장(구분자)
 
+print (df)

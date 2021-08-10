@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Aug  6 13:28:32 2021
-
-@author: user12
-"""
 
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, 

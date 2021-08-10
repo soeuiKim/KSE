@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Aug  6 11:47:07 2021
 
-@author: user12
-"""
 
  # 답안
 
