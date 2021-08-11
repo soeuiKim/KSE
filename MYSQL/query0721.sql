@@ -461,6 +461,9 @@ insert into tblboard (b_subject, b_contents, b_name, b_date)
 select * from tblboard;
 
 
+select * from 제품;
+
+select * from 고객;
 
 
 
