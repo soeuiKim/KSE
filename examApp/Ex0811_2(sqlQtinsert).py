@@ -1,6 +1,11 @@
 import pymysql
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QTableWidget, QTableWidgetItem, QLineEdit, QLabel, QPushButton, QMessageBox)
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+
 
 class App (QWidget) :
     
@@ -114,26 +119,25 @@ class App (QWidget) :
         # 테이블의 셀 클릭 이벤트
         self.tbl.cellClicked.connect(self.tblcellh)
         
+        # self.fig = plt.Figure()
+        # self.canvas = FigureCanvas(self.fig)
+        #캔버스 만드는 절차
+        # self.canvas.setGeometry(610, 30, 600, 600)
+        # self.canvas.setStyleSheet("background-color : black;")
+        
+        
         
 
         self.setWindowTitle('DB Exam _my sql insert')
-        self.setGeometry(400, 130, 800, 800)
+        self.setGeometry(300, 100, 800, 800)
         self.show()
+   
         
-        
-    def tblcellh(self, row, col) :
-        # cellinfo = " %d : %d" % (row,col)
-        # QMessageBox.about(self, '정보',cellinfo)
-        
-        sql = "select * from 제품"
-        self.cursor.execute(sql)
-        self.result = self.cursor.fetchall()
-        
-        self.cnt = len(self.result) 
-        
-        self.currec = 0 
-        
-        item = self.result[0] 
+   
+    ''' 함수만들기 (중복이 많은 레이블 출력용) ★☆★☆★☆★ 
+    
+    def leDis(self) :
+        item = self.result[self.currec]  # item 에 첫번째 레코드 반환
         self.le1.setText(item[0]) 
         self.le2.setText(item[1])
         self.le3.setText(str(item[2]))
@@ -143,7 +147,27 @@ class App (QWidget) :
         strrec = "%d / %d" % (self.currec+1, self.cnt)
         self.lbl6.setText(strrec)
         
-
+    '''
+   
+    
+   
+    def tblcellh(self, row, col) :
+        # cellinfo = " %d : %d" % (row,col)
+        # QMessageBox.about(self, '정보',cellinfo)
+        
+        self.currec = row # 행번호 반환(레코드 번호와 동일)
+        
+        item = self.result[self.currec]  # item 에 첫번째 레코드 반환
+        self.le1.setText(item[0]) 
+        self.le2.setText(item[1])
+        self.le3.setText(str(item[2]))
+        self.le4.setText(str(item[3]))
+        self.le5.setText(item[4])
+        
+        strrec = "%d / %d" % (self.currec+1, self.cnt)
+        self.lbl6.setText(strrec)
+        
+        
     def btnf(self) :
         
         sql = "select * from 제품 where 제품명 = %s"
@@ -222,6 +246,7 @@ class App (QWidget) :
         self.le5.setText(item[4]) 
     
         strrec = "%d / %d" % (self.currec+1, self.cnt)
+        self.lbl6.setText(strrec)
         
         
     def btn4Handler(self) :
