@@ -79,23 +79,23 @@ class App (QWidget) :
         self.xpm10 = []
         self.xpm25 = []
         
-        self.tbl.setHorizontalHeaderLabels(self.stn)
+        col = 0 
+        for item in self.air.findAll('item') :
+            for stname in item.findAll('stationname'):
+                self.tbl.setItem(0, col, QTableWidgetItem(stname.string))
+                self.stn.append(stname.string)
+            for pm10 in item.findAll('pm10value'):
+                self.tbl.setItem(1, col, QTableWidgetItem(pm10.string))
+                self.xpm10.append(int(pm10.string))
+            for pm25 in item.findAll('pm25value'):
+                self.tbl.setItem(2, col, QTableWidgetItem(pm25.string))
+                self.xpm25.append(int(pm25.string))
+            col += 1
         
         cnt = len(self.air.findAll('item'))
         self.tbl.setColumnCount(cnt)
+        self.tbl.setHorizontalHeaderLabels(self.stn)
         
-        # col = 0 
-        # for item in self.air.findAll('item') :
-        #     for stname in item.findAll('stationname'):
-        #         self.tbl.setItem(0, col, QTableWidgetItem(stname.string))
-        #         self.stn.append(stname.string)
-        #     for pm10 in item.findAll('pm10value'):
-        #         self.tbl.setItem(1, col, QTableWidgetItem(pm10.string))
-        #         self.xpm10.append(int(pm10.string))
-        #     for pm25 in item.findAll('pm25value'):
-        #         self.tbl.setItem(2, col, QTableWidgetItem(pm25.string))
-        #         self.xpm25.append(int(pm25.string))
-        #     col += 1
         
         
         
