@@ -26,6 +26,9 @@ class App (QWidget) :
         self.bu1 = QPushButton('조회',self)
         self.bu1.clicked.connect(self.bu1ev)
         
+        self.bu2 = QPushButton('막대그래프', self)
+        self.bu2.clicked.connect(self.bu2ev)
+        
         self.strArea = ['전국', '서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주', '세종']
         self.cbA = QComboBox()
         self.cbA.addItems(self.strArea)
@@ -43,6 +46,7 @@ class App (QWidget) :
         layout1.addWidget(self.le1)
         layout1.addWidget(self.cbA)
         layout1.addWidget(self.bu1)
+        layout1.addWidget(self.bu2)
         
         self.tbl = QTableWidget(self)
         self.fig = plt.Figure()
@@ -101,16 +105,23 @@ class App (QWidget) :
                 dt.append(strT[11:])
             for pm10 in item.findAll('pm10value'):
                 self.tbl.setItem(row,1,QTableWidgetItem(pm10.string))
+                if pm10 == '-' :
+                    pm10.append('0')
                 xpm10.append(int(pm10.string))
             for pm25 in item.findAll('pm25value'):
                 self.tbl.setItem(row,2,QTableWidgetItem(pm25.string))
+                if pm25 == '-' :
+                    pm25.append('0')
                 xpm25.append(int(pm25.string))
             for o3 in item.findAll('o3value'):
                 self.tbl.setItem(row,3,QTableWidgetItem(o3.string))
+                if o3 == '-' :
+                    o3.append('0')
                 xo3.append(float(o3.string))
             row += 1
             
-        # 막대그래프 나타내 보기
+        
+        
         
         
         
@@ -140,12 +151,18 @@ class App (QWidget) :
                 dt.append(strT[11:])
             for pm10 in item.findAll('pm10value'):
                 self.tbl.setItem(row,1,QTableWidgetItem(pm10.string))
+                if pm10 == '-' :
+                    pm10.append('0')
                 xpm10.append(int(pm10.string))
             for pm25 in item.findAll('pm25value'):
                 self.tbl.setItem(row,2,QTableWidgetItem(pm25.string))
+                if pm25 == '-' :
+                    pm25.append('0')
                 xpm25.append(int(pm25.string))
             for o3 in item.findAll('o3value'):
                 self.tbl.setItem(row,3,QTableWidgetItem(o3.string))
+                if o3 == '-' :
+                    o3.append('0')
                 xo3.append(float(o3.string))
             row += 1
         
@@ -160,6 +177,63 @@ class App (QWidget) :
         ax1.plot(dt, xpm10, 'r--', label = 'pm10')
         ax1.plot(dt, xpm25, 'b-.', label = 'pm25')
         ax1.plot(dt, xo3, 'g:', label = 'o3')
+        ax1.legend()
+        
+        
+        self.canvas.draw()
+
+
+    def bu2ev(self) :
+        
+        strArea = self.le1.text() 
+        encoderArea = parse.quote_plus(strArea)  
+        #입력한 문자열을 인코딩을위한 코드로 변환
+        
+        url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=ZsmPBe%2FeXla3HBKm7yEIeD5OLFpLY6jr0w6Qx5SXFhAuh33cjUei2weBHfE4%2FdiEAJaEQpENvyhvM4qK%2FQSzgw%3D%3D&returnType=xml&numOfRows=10&pageNo=1&stationName="+ encoderArea +"&dataTerm=DAILY&ver=1.0"
+        
+        
+        res = ulib.urlopen(url) 
+        self.air = BeautifulSoup(res,'html.parser') 
+        
+        dt = []
+        xpm10 = []
+        xpm25 = []
+        xo3 = []
+        
+        row = 0 
+        for item in self.air.findAll('item') :
+            for time in item.findAll('datatime'):
+                self.tbl.setItem(row, 0, QTableWidgetItem(time.string))
+                strT = time.string
+                dt.append(strT[11:])
+            for pm10 in item.findAll('pm10value'):
+                self.tbl.setItem(row,1,QTableWidgetItem(pm10.string))
+                if pm10 == '-' :
+                    pm10.append('0')
+                xpm10.append(int(pm10.string))
+            for pm25 in item.findAll('pm25value'):
+                if pm25 == '-' :
+                    pm25.addvalue('0')
+                self.tbl.setItem(row,2,QTableWidgetItem(pm25.string))
+                xpm25.append(int(pm25.string))
+            for o3 in item.findAll('o3value'):
+                self.tbl.setItem(row,3,QTableWidgetItem(o3.string))
+                if o3 == '-' :
+                    o3.append('0')
+                xo3.append(float(o3.string))
+            row += 1
+        
+        dt.reverse() # 역순
+        xpm10.reverse()
+        xpm25.reverse()
+        xo3.reverse()
+            
+        ax1 = self.fig.add_subplot(111)
+        ax1.clear() # 그래프 영역 초기화 (sbuplot 각각필요)
+        
+        ax1.bar(dt, xpm10, label = 'pm10')
+        ax1.bar(dt, xpm25, label = 'pm25')
+        ax1.bar(dt, xo3, label = 'o3')
         ax1.legend()
         
         

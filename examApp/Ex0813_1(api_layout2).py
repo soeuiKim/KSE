@@ -125,12 +125,24 @@ class App (QWidget) :
                 self.dt.append(strT[11:])
             for pm10 in item.findAll('pm10value'):
                 self.tbl.setItem(row,1,QTableWidgetItem(pm10.string))
+                
+                if pm10 == '-' :
+                    pm10.delete('-')
+                    pm10.append(0)
                 self.xpm10.append(int(pm10.string))
             for pm25 in item.findAll('pm25value'):
                 self.tbl.setItem(row,2,QTableWidgetItem(pm25.string))
+                
+                if pm25 == '-' :
+                    pm25.delete('-')
+                    pm.append(0)
                 self.xpm25.append(int(pm25.string))
             for o3 in item.findAll('o3value'):
                 self.tbl.setItem(row,3,QTableWidgetItem(o3.string))
+                
+                if pm10 == '-' :
+                    pm10.delete('-')
+                    pm10.append(0)
                 self.xo3.append(float(o3.string))
             row += 1
             
