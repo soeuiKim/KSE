@@ -82,9 +82,9 @@ class App (QWidget) :
         if self.rbu1.isChecked() :
             self.bar1()
         elif self.rbu2.isChecked() :
-            pass
+            self.bar1()
         else : 
-            pass
+            self.bar1()
     def bar1(self) :
         self.bar_ = self.fig.add_subplot(111)
         self.bar_.bar(self.stn, self.xpm10)
@@ -113,17 +113,17 @@ class App (QWidget) :
             for pm10 in item.findAll('pm10value'):
                 self.tbl.setItem(0,col,QTableWidgetItem(pm10.string))
                 
-                if pm10 == '-' :
-                    pm10.delete('-')
-                    pm10.append(0)
-                self.xpm10.append(int(pm10.str))
+                # if pm10 == '-' :
+                    # pm10.delete('-')
+                    # pm10.append(0)
+                self.xpm10.append(pm10.string)
             for pm25 in item.findAll('pm25value'):
                 self.tbl.setItem(1,col,QTableWidgetItem(pm25.string))
                 
-                if pm10 == '-' :
-                    pm10.delete('-')
-                    pm10.append(0)
-                self.xpm25.append(int(pm25.str))
+                # if pm10 == '-' :
+                    # pm10.delete('-')
+                    # pm10.append(0)
+                self.xpm25.append(pm25.string)
             col += 1
         
         

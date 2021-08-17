@@ -21,7 +21,7 @@ div {
     background-color: rgb(85, 86, 88);
 }
 
-a:link {
+  a:link {
     text-decoration: none;
     color:tomato;
   }
