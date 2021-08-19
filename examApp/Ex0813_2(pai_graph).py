@@ -49,7 +49,6 @@ class App (QWidget) :
         self.rbu1 = QRadioButton('type1')
         self.rbu2 = QRadioButton('type2')
         self.rbu3 = QRadioButton('type3')
-        self.rbu1.setChecked(True)
         self.rbu1.clicked.connect(self.rbueve)
         self.rbu2.clicked.connect(self.rbueve)
         self.rbu3.clicked.connect(self.rbueve)
@@ -82,12 +81,29 @@ class App (QWidget) :
         if self.rbu1.isChecked() :
             self.bar1()
         elif self.rbu2.isChecked() :
-            self.bar1()
+            self.bar2()
         else : 
-            self.bar1()
+            self.bar3()
     def bar1(self) :
         self.bar_ = self.fig.add_subplot(111)
+        self.bar_.clear()
         self.bar_.bar(self.stn, self.xpm10)
+        
+        
+        self.canvas.draw()
+        
+    def bar2(self) :
+        self.bar_ = self.fig.add_subplot(111)
+        self.bar_.clear()
+        self.bar_.bar(self.stn, self.xpm25)
+        
+        
+        self.canvas.draw()
+    
+    def bar3(self) :
+        self.bar_ = self.fig.add_subplot(111)
+        self.bar_.clear()
+        self.bar_.bar(self.stn, self.xpm10, self.xpm25)
         
         
         self.canvas.draw()
@@ -112,18 +128,17 @@ class App (QWidget) :
                 self.stn.append(stname.string)
             for pm10 in item.findAll('pm10value'):
                 self.tbl.setItem(0,col,QTableWidgetItem(pm10.string))
-                
-                # if pm10 == '-' :
-                    # pm10.delete('-')
-                    # pm10.append(0)
-                self.xpm10.append(pm10.string)
+                if pm10 == '-' :
+                    self.xpm10.append(0)
+                else :
+                    self.xpm10.append(int(pm10.string))
+            
             for pm25 in item.findAll('pm25value'):
                 self.tbl.setItem(1,col,QTableWidgetItem(pm25.string))
-                
-                # if pm10 == '-' :
-                    # pm10.delete('-')
-                    # pm10.append(0)
-                self.xpm25.append(pm25.string)
+                if pm25 == '-' :
+                    self.xpm25.append(0)
+                else :
+                    self.xpm25.append(int(pm25.string))
             col += 1
         
         

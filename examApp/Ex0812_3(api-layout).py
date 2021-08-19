@@ -105,19 +105,22 @@ class App (QWidget) :
                 dt.append(strT[11:])
             for pm10 in item.findAll('pm10value'):
                 self.tbl.setItem(row,1,QTableWidgetItem(pm10.string))
-                if pm10 == '-' :
-                    pm10.append('0')
-                xpm10.append(int(pm10.string))
+                if pm10.string == '-' :
+                    xpm10.append(0)
+                else :
+                    xpm10.append(int(pm10.string))
             for pm25 in item.findAll('pm25value'):
                 self.tbl.setItem(row,2,QTableWidgetItem(pm25.string))
-                if pm25 == '-' :
-                    pm25.append('0')
-                xpm25.append(int(pm25.string))
+                if pm25.string == '-' :
+                    xpm25.append(0)
+                else : 
+                    xpm25.append(int(pm25.string))
             for o3 in item.findAll('o3value'):
                 self.tbl.setItem(row,3,QTableWidgetItem(o3.string))
-                if o3 == '-' :
-                    o3.append('0')
-                xo3.append(float(o3.string))
+                if o3.string == '-' :
+                    xo3.append('0')
+                else :
+                    xo3.append(float(o3.string))
             row += 1
             
         

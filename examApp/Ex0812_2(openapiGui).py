@@ -11,7 +11,6 @@ import urllib.request as ulib
 import urllib.parse as parse
 
 
-
 class App (QWidget) :
     
     def __init__(self) :
@@ -64,7 +63,7 @@ class App (QWidget) :
             for o3 in item.findAll('o3value'):
                 self.tbl.setItem(row,3,QTableWidgetItem(o3.string))
             row += 1
-        
+
         
         
         

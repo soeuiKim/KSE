@@ -165,24 +165,52 @@ class App (QWidget) :
         self.le5.setText(item[4])
         
         strrec = "%d / %d" % (self.currec+1, self.cnt)
+        
         self.lbl6.setText(strrec)
         
         
     def btnf(self) :
         
-        sql = "select * from 제품 where 제품명 = %s"
-        self.cursor.execute(sql, (self.lef.text()))
+        findstr = self.lef.text()
+        if len(findstr) > 0 :
+        
+            sql = "select * from 제품 where 제품명 = %s"
+            self.cursor.execute(sql, (findstr))
+        else :
+            sql = "select * from 제품"
+            self.cursor.execute(sql)
+           
         self.result = self.cursor.fetchall()
-        to = len(self.result)
-        if to > 0 :
-            item = self.result[0]  
-            self.le1.setText(item[0]) 
-            self.le2.setText(item[1])
-            self.le3.setText(str(item[2]))
-            self.le4.setText(str(item[3]))
-            self.le5.setText(item[4]) 
-        else : # 조회실패시
-            QMessageBox.about(self, '정보', '검색결과가 없습니다')
+        self.tbl.setRowCount(self.cnt)
+        
+        self.currec = 0
+        
+        item = self.result[self.currec]  # item 에 첫번째 레코드 반환
+        self.le1.setText(item[0]) 
+        self.le2.setText(item[1])
+        self.le3.setText(str(item[2]))
+        self.le4.setText(str(item[3]))
+        self.le5.setText(item[4])
+        
+        strrec = "%d / %d" % (self.currec+1, self.cnt)
+        self.lbl6.setText(strrec)
+        
+        row = 0
+        for item in self.result : # 레코드 갯수만큼 반복
+                for col in range(5) : # 열구성
+                    self.tbl.setItem(row,col,QTableWidgetItem(str(item[col])))
+                row += 1
+         
+        if self.cnt > 0 :
+            self.currec = 0
+            self.leDis()
+        for item in self.result : # 레코드 갯수만큼 반복
+                for col in range(5) : # 열구성
+                    self.tbl.setItem(row,col,QTableWidgetItem(str(item[col])))
+                row += 1
+            
+            
+        
             
     def btn1Handler(self) :
         sql = "insert into 제품 values (%s,%s,%s,%s,%s)"
