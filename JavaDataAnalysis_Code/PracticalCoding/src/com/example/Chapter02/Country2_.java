@@ -2,11 +2,11 @@ package com.example.Chapter02;
 
 import java.util.Scanner;
 
-public class Country2_merge { // implements comparable {
+public class Country2_ { // implements comparable {
 	protected String name;
 	protected int population;
 
-	public Country2_merge(Scanner in) {
+	public Country2_(Scanner in) {
 		if (in.hasNextLine()) {
 			this.name = in.next();
 			this.population = in.nextInt();
