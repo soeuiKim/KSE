@@ -234,9 +234,9 @@ class App (QWidget) :
         ax1 = self.fig.add_subplot(111)
         ax1.clear() # 그래프 영역 초기화 (sbuplot 각각필요)
         
-        ax1.bar(dt, xpm10, label = 'pm10')
-        ax1.bar(dt, xpm25, label = 'pm25')
-        ax1.bar(dt, xo3, label = 'o3')
+        ax1.plot(dt, xpm10, label = 'pm10')
+        ax1.plot(dt, xpm25, label = 'pm25')
+        ax1.plot(dt, xo3, label = 'o3')
         ax1.legend()
         
         

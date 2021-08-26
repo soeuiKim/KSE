@@ -20,7 +20,7 @@ def functhread(client_socket, addr) :
             
             client_socket.send(data.encode()) # 온도(예제)데이터 10개 전송
             
-            time.sleep(60) # 60초(1분) 지연
+            time.sleep(1) # 1초 지연
         
         except ConnectionResetError as e:
             break

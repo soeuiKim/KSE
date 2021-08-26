@@ -1,3 +1,5 @@
+import socket
+import datetime
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -29,7 +31,7 @@ class App (QWidget) :
         self.col_head = ['date','Temp1','Temp2','Temp3','Temp4','Temp5','Temp6','Temp7','Temp8','Temp9','Temp10']
         self.tbl.setHorizontalHeaderLabels(self.col_head)
         
-        self.dbupdate()
+        
         
         self.line = QLineEdit()
         self.combo = QComboBox()
@@ -49,13 +51,6 @@ class App (QWidget) :
         layoutcan.addWidget(self.canvas)
         
         
-        # 타이머 생성
-        self.timer1 = QTimer(self) #Qtcore에 소속되어있음
-        self.timer1.start(10000) # 1000 = 1초
-        self.timer1.timeout.connect(self.testmsg) # 이벤트 함수 연결
-        
-        
-        
         layoutAll = QVBoxLayout()
         layoutAll.addLayout(layouttbl)
         layoutAll.addLayout(layoutsel)
@@ -66,47 +61,47 @@ class App (QWidget) :
         self.setWindowTitle('Sensor Thread SQL Gui')
         self.setGeometry(400, 200, 1200, 700)
         self.show()
-        self.conn.close()
         
         
-    def testmsg(self) :
-        QMessageBox.about(self, "test", "test")
+        HOST = '192.168.0.12'
+        PORT = 9999
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket.connect((HOST, PORT))
+        
+        # 타이머 생성
+        self.timer1 = QTimer(self) #Qtcore에 소속되어있음
+        self.timer1.start(1000) # 1000 = 1초
+        self.timer1.timeout.connect(self.graph1) # 이벤트 함수 연결
         
         
         
     def dbupdate(self) :
-        self.df0 = [] #시간용
-        self.df1 = [] #센서1
-        
         sql = 'select * from tblsensor order by ts_date desc limit 20'
         self.cursor.execute(sql) 
         result = self.cursor.fetchall()
-        
-        row = 0
-        for item in result:
-            for col in range(11) :
-                self.tbl.setItem(row,col,QTableWidgetItem(str(item[col])))
-                strtime = item[0]
-            self.df0.append(strtime[12:]) #시간 데이터
-            self.df1.append(item[1]) #첫번째 센서테이터
-            row += 1
-        
-        self.df0.reverse()
-        self.df1.reverse()
         self.graph1()
- 
+        
  
     def graph1(self) :
+        data = self.client_socket.recv(1024)
+    
+        now = datetime.datetime.today() # 현재 시스템 날짜 및 시간
+        nowstr = now.strftime('%Y-%m-%d  %H:%M:%S') # 형식을 만들어서 문자열로 저장
+        print(nowstr)
+        
+        rs = data.decode().split(':') # 콜론을 구분자로 모든 데이터를 분리(리스트생성)
+        print(rs)
+        
+        df0 = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10']
+        
         self.fig.clear()
         
         self.ax1 = self.fig.add_subplot(111)
         self.ax1.clear()
-        
-        self.ax1.bar(self.df0, self.df1)
+        self.ax1.bar(df0, rs)
         
         self.canvas.draw()
         
-
 if __name__ == '__main__' :
     app = QApplication(sys.argv)
     ex = App()
