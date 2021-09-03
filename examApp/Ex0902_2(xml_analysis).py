@@ -49,7 +49,7 @@ for item in air.findAll('item'):
 
 data = pd.DataFrame({'pm10':df1,'pm25':df2,'co':df3,'so2':df4,'no2':df5,'o3':df6,'datatime':df7})
 
-data = data[data['pm10'] !='-']
+data = data[data['pm10'] !='-'] # '-' 데이터 삭제
 data = data[data['pm25'] !='-']
 # print(data.head(20))
 # data.to_csv('pm10info.csv', index=False)
@@ -76,26 +76,36 @@ Y_predict = lr.predict(X_test) #테스트데이터로 예측
 # print(Y_predict[0])
 # print(Y_test[0])
 
+# print(data['pm10'])
+
 
 mse = mean_squared_error(Y_test, Y_predict) # mse추출
 rmse = np.sqrt(mse) # 제곱근 취함
-print(mse,rmse)
+# print(mse,rmse)
 coef = pd.Series(data=np.round(lr.coef_,2), index=X.columns)
 # print(lr.coef_, lr.intercept_) #기울기와 y절편
 # print(coef)
 
+# print(data.columns) : x_feat
+
 # =============================================================================
 # fig, axs = plt.subplots(figsize=(16,16), ncols=3, nrows=2)
-# x_feat = ['pm10','pm25','co','so2','no2','o3','datatime']
-# plot_color = ['r','g','b','y','k']
+# x_feat = ['pm25','co','so2','no2','o3','datatime']
+# plot_color = ['r','g','b','y','k','v']
 # for i, feat in enumerate(x_feat): #리스트요소를 이용하여 반복
 #     row = int(i / 3) # 3개씩 그룹구성
 #     col = i % 3 #열번호
-#     sns.regplot(x = feat, y = 'pm10', data=data, ax=axs[row][col], color=plot_color[i]) #선형회귀그래프
+#     sns.regplot(x = feat, y = 'pm10', data=data, ax=axs[row][col]) #선형회귀그래프
+# =============================================================================
+# 식에는 문제가 없으나 연관관계가 많이 없어 값이 비정상적임, 그래프표현 x
+# =============================================================================
+# sns.distplot(data, hue='pm10')
+# plt.show()
 # =============================================================================
 
-# sns.pairplot(data, hue='pm10')
-# plt.show()
+heatmap_data = data[['pm10','pm25','co','so2','no2','o3','datatime']]
+sns.heatmap(heatmap_data.astype(float).corr(), linewidths=0.1, annot=True)
+plt.show()
 
 
 
