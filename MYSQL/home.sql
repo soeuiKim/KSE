@@ -128,3 +128,34 @@ select * from od;
 -- commit 트랜잭션 확정
 -- rollback 트랜잭션 취소
 -- checkpoint 복귀지점 설정
+
+
+create table employee ( 
+	em_id int not null auto_increment, 
+    em_name char(50) not null,   
+    em_rank char(50) not null,          
+    em_pay int not null,               
+    primary key(em_id)
+);
+    
+insert into employee (em_name,em_rank,em_pay)
+	values ('홍길동','과장',1000000);
+    
+select * from employee;
+
+update employee set em_pay = 1000000 where em_name = '홍길동';
+
+create view pay
+	as select em_name from employee where em_pay = 3000000;
+
+select * from pay;
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
